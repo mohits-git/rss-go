@@ -56,7 +56,7 @@ func write(cfg Config) error {
 	if err != nil {
 		return err
 	}
-	file, err := os.OpenFile(configFilePath, os.O_WRONLY, 0644)
+	file, err := os.Create(configFilePath)
 	if err != nil {
 		return errors.New(fmt.Sprintln("ERROR: @go-aggregator/internal/config: failed to open config file\n", err))
 	}
