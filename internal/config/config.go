@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-const configFileName = ".aggregatorconfig.json"
+const configFileName = ".gatorconfig.json"
 
 // Application configuration struct
 type Config struct {

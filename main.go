@@ -30,7 +30,7 @@ func main() {
 	dbQueries := database.New(db)
 
 	s := &state{
-		db: dbQueries,
+		db:  dbQueries,
 		cfg: &cfg,
 	}
 
