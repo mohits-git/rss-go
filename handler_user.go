@@ -57,3 +57,31 @@ func handleRegister(s *state, cmd command) error {
 	fmt.Println("Registered as", user.Name)
 	return nil
 }
+
+func handleUsers(s *state, cmd command) error {
+	if len(cmd.Args) != 0 {
+		return errors.New("Usage: go-aggregator users")
+	}
+
+	users, err := s.db.GetUsers(context.Background())
+	if err != nil {
+		return errors.New(fmt.Sprintln("Failed to get users\n", err))
+	}
+
+	if len(users) == 0 {
+		fmt.Println("No users found")
+		return nil
+	}
+
+	currentUser := s.cfg.CurrentUserName
+
+	for _, user := range users {
+		if user == currentUser {
+			fmt.Println(" *", user, "(current)")
+			continue
+		}
+		fmt.Println(" *", user)
+	}
+
+	return nil
+}

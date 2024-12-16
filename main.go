@@ -41,6 +41,7 @@ func main() {
 	c.register("login", handleLogin)
 	c.register("register", handleRegister)
 	c.register("reset", handleReset)
+	c.register("users", handleUsers)
 
 	args := os.Args
 	if len(args) < 2 {
