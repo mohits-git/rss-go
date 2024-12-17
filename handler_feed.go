@@ -43,3 +43,21 @@ func handleAddFeed(s *state, c command) error {
 
 	return nil
 }
+
+func handleFeeds(s *state, c command) error {
+	if len(c.Args) != 0 {
+		return errors.New("Usage: go-aggregator feeds")
+	}
+
+	feeds, err := s.db.GetFeeds(context.Background())
+	if err != nil {
+		return errors.New(fmt.Sprintln("Failed to get feeds", err))
+	}
+
+	fmt.Println("Feeds: ")
+	for _, feed := range feeds {
+		fmt.Println(" - Name:", feed.Name, "\tURL:", feed.Url, "\tUser:", feed.Username)
+	}
+
+	return nil
+}
