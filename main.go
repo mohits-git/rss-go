@@ -34,19 +34,7 @@ func main() {
 		cfg: &cfg,
 	}
 
-	c := commands{
-		registry: make(map[string]func(*state, command) error),
-	}
-
-	c.register("login", handleLogin)
-	c.register("register", handleRegister)
-	c.register("reset", handleReset)
-	c.register("users", handleUsers)
-	c.register("agg", handleAgg)
-	c.register("addfeed", handleAddFeed)
-	c.register("feeds", handleFeeds)
-	c.register("follow", handleFollow)
-	c.register("following", handleFollowing)
+	c := registerCommands()
 
 	args := os.Args
 	if len(args) < 2 {

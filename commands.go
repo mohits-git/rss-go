@@ -21,3 +21,21 @@ func (c *commands) run(s *state, cmd command) error {
 	}
 	return errors.New("Err " + cmd.Name + " command not found")
 }
+
+func registerCommands() *commands {
+	c := commands{
+		registry: make(map[string]func(*state, command) error),
+	}
+
+	c.register("login", handleLogin)
+	c.register("register", handleRegister)
+	c.register("reset", handleReset)
+	c.register("users", handleUsers)
+	c.register("agg", handleAgg)
+	c.register("addfeed", middlewareLoggedIn(handleAddFeed))
+	c.register("feeds", handleFeeds)
+	c.register("follow", middlewareLoggedIn(handleFollow))
+	c.register("following", middlewareLoggedIn(handleFollowing))
+
+	return &c
+}
