@@ -54,3 +54,26 @@ func handleFollowing(s *state, c command, user database.User) error {
 	}
 	return nil
 }
+
+func handleUnfollow(s *state, c command, user database.User) error {
+  if len(c.Args) != 1 {
+    return errors.New("Usage: go-aggregator unfollow <feed_url>")
+  }
+
+  feed, err := s.db.GetFeed(context.Background(), c.Args[0])
+  if err != nil {
+    return errors.New(fmt.Sprintln("Failed to get feed", err))
+  }
+
+  err = s.db.DeleteFeedFollow(context.Background(), database.DeleteFeedFollowParams{
+    UserID: user.ID,
+    FeedID: feed.ID,
+  })
+  if err != nil {
+    return errors.New(fmt.Sprintln("Failed to unfollow feed", err))
+  }
+
+  fmt.Println(user.Name, "unfollowed", feed.Name, "feed.")
+
+  return nil
+}

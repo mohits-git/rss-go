@@ -32,10 +32,11 @@ func registerCommands() *commands {
 	c.register("reset", handleReset)
 	c.register("users", handleUsers)
 	c.register("agg", handleAgg)
-	c.register("addfeed", middlewareLoggedIn(handleAddFeed))
 	c.register("feeds", handleFeeds)
+	c.register("addfeed", middlewareLoggedIn(handleAddFeed))
 	c.register("follow", middlewareLoggedIn(handleFollow))
 	c.register("following", middlewareLoggedIn(handleFollowing))
+	c.register("unfollow", middlewareLoggedIn(handleUnfollow))
 
 	return &c
 }
