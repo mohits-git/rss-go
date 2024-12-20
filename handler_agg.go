@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/mohits-git/go-aggregator/internal/database"
 )
 
@@ -55,7 +56,58 @@ func scrapeFeeds(s *state) error {
 
 	fmt.Println("Feed fetched: ", feed.Channel.Title)
 	for _, item := range feed.Channel.Item {
-		fmt.Println(" - ", item.Title)
+		pubDate := getPublishedDate(item.PubDate)
+
+		_, err := s.db.CreatePost(context.Background(), database.CreatePostParams{
+			ID:     uuid.New(),
+			FeedID: nextFeed.ID,
+			Title:  item.Title,
+			Url:    item.Link,
+			Description: sql.NullString{
+				String: item.Description,
+				Valid:  true,
+			},
+			PublishedAt: sql.NullTime{
+				Time:  pubDate,
+				Valid: true,
+			},
+		})
+
+		if err != nil {
+			if err.Error() == "pq: duplicate key value violates unique constraint \"posts_url\"" {
+				continue
+			}
+			fmt.Println("Error creating post: %w", err)
+		}
+
 	}
+
 	return nil
+}
+
+func getPublishedDate(datestr string) time.Time {
+	formats := []string{
+		time.RFC1123Z,
+		time.RFC1123,
+		time.RFC822Z,
+		time.RFC822,
+		time.RFC3339,
+		time.RFC3339Nano,
+	}
+
+	var pubDate time.Time
+	var err error
+
+	for _, format := range formats {
+		pubDate, err = time.Parse(format, datestr)
+		if err == nil {
+			break
+		}
+	}
+
+	if err != nil {
+		pubDate = time.Now()
+	}
+
+	return pubDate
 }
