@@ -10,7 +10,12 @@ VALUES (
 )
 RETURNING *;
 
--- name: GetPostsForUser :one
+-- name: GetPostsForUser :many
 SELECT * FROM posts
-ORDER BY created_at DESC
-LIMIT $1;
+WHERE feed_id IN (
+  SELECT id FROM feeds
+  WHERE user_id = $1
+)
+ORDER BY published_at DESC
+LIMIT $2
+OFFSET $3;
