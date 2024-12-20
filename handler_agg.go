@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/mohits-git/go-aggregator/internal/database"
+	"github.com/mohits-git/rss-go/internal/database"
 )
 
 func handleAgg(s *state, c command) error {
 	if len(c.Args) < 1 {
-		return fmt.Errorf("Usage: go-aggregator agg <time_between_reqs>")
+		return fmt.Errorf("Usage: rss-go agg <time_between_reqs>")
 	}
 
 	timeBetweenReqs, err := time.ParseDuration(c.Args[0])

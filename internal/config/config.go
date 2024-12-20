@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-const configFileName = ".gatorconfig.json"
+const configFileName = ".rssgoconfig.json"
 
 // Application configuration struct
 type Config struct {
@@ -25,7 +25,7 @@ func (c *Config) SetUser(userName string) error {
 func getConfigFilePath() (string, error) {
 	homePath, err := os.UserHomeDir()
 	if err != nil {
-		return "", errors.New(fmt.Sprintln("ERROR: @go-aggregator/internal/config: failed to get home directory\n", err))
+		return "", errors.New(fmt.Sprintln("ERROR: @rss-go/internal/config: failed to get home directory\n", err))
 	}
 	return filepath.Join(homePath, configFileName), nil
 }
@@ -38,14 +38,14 @@ func Read() (Config, error) {
 	}
 	file, err := os.Open(configFilePath)
 	if err != nil {
-		return Config{}, errors.New(fmt.Sprintln("ERROR: @go-aggregator/internal/config: failed to open config file\n", err))
+		return Config{}, errors.New(fmt.Sprintln("ERROR: @rss-go/internal/config: failed to open config file\n", err))
 	}
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
 	cfg := Config{}
 	if err := decoder.Decode(&cfg); err != nil {
-		return Config{}, errors.New(fmt.Sprintln("ERROR: @go-aggregator/internal/config: failed to decode config\n", err))
+		return Config{}, errors.New(fmt.Sprintln("ERROR: @rss-go/internal/config: failed to decode config\n", err))
 	}
 
 	return cfg, nil
@@ -58,13 +58,13 @@ func write(cfg Config) error {
 	}
 	file, err := os.Create(configFilePath)
 	if err != nil {
-		return errors.New(fmt.Sprintln("ERROR: @go-aggregator/internal/config: failed to open config file\n", err))
+		return errors.New(fmt.Sprintln("ERROR: @rss-go/internal/config: failed to open config file\n", err))
 	}
 	defer file.Close()
 
 	encoder := json.NewEncoder(file)
 	if err = encoder.Encode(cfg); err != nil {
-		return errors.New(fmt.Sprintln("ERROR: @go-aggregator/internal/config: failed to encode config\n", err))
+		return errors.New(fmt.Sprintln("ERROR: @rss-go/internal/config: failed to encode config\n", err))
 	}
 	return nil
 }

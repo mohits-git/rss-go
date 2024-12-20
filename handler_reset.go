@@ -8,7 +8,7 @@ import (
 
 func handleReset(s *state, cmd command) error {
 	if len(cmd.Args) != 0 {
-		return errors.New("Usage: go-aggregator reset")
+		return errors.New("Usage: rss-go reset")
 	}
 
 	err := s.db.ResetUsers(context.Background())

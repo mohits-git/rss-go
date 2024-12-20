@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/mohits-git/go-aggregator/internal/database"
+	"github.com/mohits-git/rss-go/internal/database"
 )
 
 func handleLogin(s *state, cmd command) error {
 	if len(cmd.Args) != 1 {
-		return errors.New("Usage: go-aggregator login <username>")
+		return errors.New("Usage: rss-go login <username>")
 	}
 
 	userExists, err := s.db.GetUser(context.Background(), cmd.Args[0])
@@ -31,7 +31,7 @@ func handleLogin(s *state, cmd command) error {
 
 func handleRegister(s *state, cmd command) error {
 	if len(cmd.Args) != 1 {
-		return errors.New("Usage: go-aggregator register <username>")
+		return errors.New("Usage: rss-go register <username>")
 	}
 
 	userData := database.CreateUserParams{
@@ -60,7 +60,7 @@ func handleRegister(s *state, cmd command) error {
 
 func handleUsers(s *state, cmd command) error {
 	if len(cmd.Args) != 0 {
-		return errors.New("Usage: go-aggregator users")
+		return errors.New("Usage: rss-go users")
 	}
 
 	users, err := s.db.GetUsers(context.Background())

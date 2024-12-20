@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/mohits-git/go-aggregator/internal/database"
+	"github.com/mohits-git/rss-go/internal/database"
 )
 
 func handleFollow(s *state, c command, user database.User) error {
 	if len(c.Args) != 1 {
-		return errors.New("Usage: go-aggregator follow <feed_url>")
+		return errors.New("Usage: rss-go follow <feed_url>")
 	}
 
 	feed, err := s.db.GetFeed(context.Background(), c.Args[0])
@@ -40,7 +40,7 @@ func handleFollow(s *state, c command, user database.User) error {
 
 func handleFollowing(s *state, c command, user database.User) error {
 	if len(c.Args) != 0 {
-		return errors.New("Usage: go-aggregator following")
+		return errors.New("Usage: rss-go following")
 	}
 
 	following, err := s.db.GetFeedFollowsForUser(context.Background(), user.ID)
@@ -57,7 +57,7 @@ func handleFollowing(s *state, c command, user database.User) error {
 
 func handleUnfollow(s *state, c command, user database.User) error {
   if len(c.Args) != 1 {
-    return errors.New("Usage: go-aggregator unfollow <feed_url>")
+    return errors.New("Usage: rss-go unfollow <feed_url>")
   }
 
   feed, err := s.db.GetFeed(context.Background(), c.Args[0])

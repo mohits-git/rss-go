@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"github.com/mohits-git/go-aggregator/internal/database"
+	"github.com/mohits-git/rss-go/internal/database"
 )
 
 func middlewareLoggedIn(handler func(s *state, cmd command, user database.User) error) func(*state, command) error {

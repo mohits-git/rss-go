@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/mohits-git/go-aggregator/internal/database"
+	"github.com/mohits-git/rss-go/internal/database"
 )
 
 func handleBrowse(s *state, c command, user database.User) error {
 	if len(c.Args) > 2 {
-		return errors.New("Too many arguments. Usage: go-aggregator browse [limit] [offset]")
+		return errors.New("Too many arguments. Usage: rss-go browse [limit] [offset]")
 	}
 
 	var limit int32 = 5

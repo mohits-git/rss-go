@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/mohits-git/go-aggregator/internal/database"
+	"github.com/mohits-git/rss-go/internal/database"
 )
 
 func handleAddFeed(s *state, c command, user database.User) error {
 	if len(c.Args) != 2 {
-		return errors.New("Usage: go-aggregator addFeed <feed_name> <feed_url> ")
+		return errors.New("Usage: rss-go addFeed <feed_name> <feed_url> ")
 	}
 
 	feedData := database.CreateFeedParams{
@@ -52,7 +52,7 @@ func handleAddFeed(s *state, c command, user database.User) error {
 
 func handleFeeds(s *state, c command) error {
 	if len(c.Args) != 0 {
-		return errors.New("Usage: go-aggregator feeds")
+		return errors.New("Usage: rss-go feeds")
 	}
 
 	feeds, err := s.db.GetFeeds(context.Background())

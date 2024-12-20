@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/mohits-git/go-aggregator/internal/config"
-	"github.com/mohits-git/go-aggregator/internal/database"
+	"github.com/mohits-git/rss-go/internal/config"
+	"github.com/mohits-git/rss-go/internal/database"
 
 	_ "github.com/lib/pq"
 )
@@ -38,7 +38,7 @@ func main() {
 
 	args := os.Args
 	if len(args) < 2 {
-		log.Fatal("Usage: go-aggregator <command> [args...]")
+		log.Fatal("Usage: rss-go <command> [args...]")
 	}
 
 	cmd := command{

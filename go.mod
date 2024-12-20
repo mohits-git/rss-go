@@ -1,4 +1,4 @@
-module github.com/mohits-git/go-aggregator
+module github.com/mohits-git/rss-go
 
 go 1.23.0
 
